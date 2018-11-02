@@ -14,6 +14,7 @@ namespace NewYearsGift
             Model.Candy can2 = new Model.Candy(Enum.TypeCandy.chocolate, Enum.Filling.nougat, "Sweety", 14.4, 14);
             Model.Chocolate choc1 = new Model.Chocolate(Enum.TypeChocolate.commonBitter, Enum.Filling.nuts, "Orvel", 32.6, 42);
             Model.Cookie cook1 = new Model.Cookie(Enum.TypeCookie.butter, "Oatmeal", "Sindy", 22.1, 7);
+            can1.DecreaseSugar(2);
 
             //childGift.ShowComposition();
             //childGift.AddItem(can1);

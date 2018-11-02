@@ -43,16 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Enum\Filling.cs" />
-    <Compile Include="Model\Enum\TypeCandy.cs" />
-    <Compile Include="Model\Enum\TypeCookie.cs" />
-    <Compile Include="Model\Enum\TypeChocolate.cs" />
+    <Compile Include="Enum\Filling.cs" />
+    <Compile Include="Enum\TypeCandy.cs" />
+    <Compile Include="Enum\TypeCookie.cs" />
+    <Compile Include="Enum\TypeChocolate.cs" />
     <Compile Include="Model\Candy.cs" />
     <Compile Include="ChildGift.cs" />
     <Compile Include="Model\Chocolate.cs" />
     <Compile Include="Model\Cookie.cs" />
     <Compile Include="IGift.cs" />
-    <Compile Include="Model\ISweetnessWithType.cs" />
     <Compile Include="Model\ISweetnessWithFilling.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
