@@ -25,13 +25,13 @@ namespace NewYearsGift
         public ChildGift(string name, double weight)
         {
             Name = name;
-            this.weight = WeightCorrect(weight);
+            this.weight = GetCorrectWeight(weight);
         }
 
         public ChildGift(string name, double weight, List<Sweetness> sweets)
         {
             Name = name;
-            this.weight = WeightCorrect(weight);
+            this.weight = GetCorrectWeight(weight);
             AddItems(sweets);            
         }
 
@@ -119,7 +119,7 @@ namespace NewYearsGift
             }            
         }        
 
-        private double WeightCorrect(double setWeight)
+        private double GetCorrectWeight(double setWeight)
         {
             if (setWeight >= MinGiftWeight)
                 return setWeight;

@@ -4,7 +4,7 @@ namespace NewYearsGift.Model
 {
     public class Chocolate : Sweetness, ISweetnessWithFilling
     {
-        private const int FixedCaloryChoclate = 15;
+        private const int FixedChoclateCalories = 15;
 
         public System.Enum Filling { get; set; }        
 
@@ -16,7 +16,7 @@ namespace NewYearsGift.Model
 
         public override int CountCalories()
         {
-            return FixedCaloryChoclate + base.CountCalories();
+            return FixedChoclateCalories + base.CountCalories();
         }
 
         public override string ToString()

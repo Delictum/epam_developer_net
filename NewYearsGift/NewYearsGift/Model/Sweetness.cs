@@ -27,8 +27,17 @@
         }
         public void DecreaseWeight(double deletedWeight)
         {
-            if (CanBeDecrease(Weight, deletedWeight))
-                Weight -= deletedWeight;                   
+            try
+            {
+                if (CanBeDecreased(Weight, deletedWeight))
+                    Weight -= deletedWeight;
+                else
+                    throw new System.ArithmeticException("Can't be decrease to a negative value.");
+            }
+            catch (System.ArithmeticException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
         }
 
         public void IncreaseSugar(int addedSugarInGramms)
@@ -38,24 +47,20 @@
 
         public void DecreaseSugar(int deletedSugarInGramms)
         {
-            if (CanBeDecrease(SugarInGramms, deletedSugarInGramms))
-                SugarInGramms -= deletedSugarInGramms;
-        }
-
-        private bool CanBeDecrease(double currentValue, double decreaseValue)
-        {
             try
             {
-                if (currentValue - decreaseValue > 0)
-                    return true;
+                if (CanBeDecreased(SugarInGramms, deletedSugarInGramms))
+                    SugarInGramms -= deletedSugarInGramms;
                 else
                     throw new System.ArithmeticException("Can't be decrease to a negative value.");
             }
             catch (System.ArithmeticException e)
             {
                 System.Console.WriteLine(e.Message);
-                return false;
             }
         }
+
+        private bool CanBeDecreased(double currentValue, double decreaseValue) =>
+            (currentValue - decreaseValue > 0) ? true : false;
     }
 }

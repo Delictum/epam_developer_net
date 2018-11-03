@@ -4,7 +4,7 @@ namespace NewYearsGift.Model
 {
     public class Cookie : Sweetness
     {
-        private const int FixedCaloryCookie = 15;
+        private const int FixedCookieCalories = 15;
 
         public string Shape { get; set; }        
 
@@ -16,7 +16,7 @@ namespace NewYearsGift.Model
 
         public override int CountCalories()
         {            
-            return FixedCaloryCookie + base.CountCalories();
+            return FixedCookieCalories + base.CountCalories();
         }
 
         public override string ToString()
