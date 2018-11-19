@@ -50,6 +50,7 @@
     <Compile Include="CustomText\TextContent\Characters\CharacterType.cs" />
     <Compile Include="CustomText\TextContent\SentenceType.cs" />
     <Compile Include="CustomText\TextProcessing.cs" />
+    <Compile Include="ObjectModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomText\IText.cs" />
