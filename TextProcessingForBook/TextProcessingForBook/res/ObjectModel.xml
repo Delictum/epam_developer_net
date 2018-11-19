@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextProcessingForBook type="namespace">
+  <App type="config" />
+  <Program type="main" />
+  <CustomText type="folder">
+    <IText type="interface" />
+    <Text type="class" />
+    <TextProcessing type="class" />
+    <TextContent type="folder">
+      <AuxiliaryForSentence type="static class" />
+      <Sentence type="class" />
+      <SentenceType type="enum" />
+      <Word type="class" />
+    </TextContent>
+    <Characters type="folder">
+      <Character type="class" />
+      <CharacterHelper type="static class" />
+      <CharacterType type="enum" />
+    </Characters>
+  </CustomText>
+</TextProcessingForBook>
