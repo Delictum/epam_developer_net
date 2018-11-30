@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EDDC4653-E79B-4081-8249-F93A73136B3A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ServiceBillingSystem</RootNamespace>
+    <AssemblyName>ServiceBillingSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClassLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ContoursOfTheInformationProvided\bin\Debug\ClassLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ContourBillingSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ContourBillingSystem\bin\Debug\ContourBillingSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="ModelOfTheInformationProvided, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ModelOfTheInformationProvided\bin\Debug\ModelOfTheInformationProvided.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomExceptions\ConfigurationDirectoryNotFoundException.cs" />
+    <Compile Include="CustomExceptions\ConnectTerminalException.cs" />
+    <Compile Include="CustomExceptions\ContainArgumentException.cs" />
+    <Compile Include="CustomExceptions\DisconnectTerminalException.cs" />
+    <Compile Include="CustomExceptions\FreePortNotFoundException.cs" />
+    <Compile Include="CustomExceptions\CallLogArgumentException.cs" />
+    <Compile Include="CustomExceptions\GeneralizedException.cs" />
+    <Compile Include="CustomExceptions\PortArgumentOutOfRangeException.cs" />
+    <Compile Include="CustomExceptions\ProgramLog.cs" />
+    <Compile Include="ManagementDecisions\CallManagement.cs" />
+    <Compile Include="ManagementDecisions\CompanyManagement.cs" />
+    <Compile Include="ManagementDecisions\ContractManagement.cs" />
+    <Compile Include="ManagementDecisions\StationManagment.cs" />
+    <Compile Include="ManagementDecisions\TerminalManagement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvisionOfInformation\ContactAddressInformation.cs" />
+    <Compile Include="ProvisionOfInformation\InformationProvided.cs" />
+    <Compile Include="ProvisionOfInformation\PersonalIdentification.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ContoursOfTheInformationProvided\ContoursOfTheInformationProvided.csproj">
+      <Project>{9C01E7CB-087C-42E9-9D1D-3D1DED63397C}</Project>
+      <Name>ContoursOfTheInformationProvided</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelBillingSystem\ModelBillingSystem.csproj">
+      <Project>{13D5E3AE-A198-46AD-B16E-33317F3244BC}</Project>
+      <Name>ModelBillingSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

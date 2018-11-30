@@ -328,3 +328,11 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+TextProcessingForBook/TextProcessingForBook/Properties/AssemblyInfo.cs
+TheBillingSystem/ServiceOfTheInformationProvided/Properties/AssemblyInfo.cs
+TheBillingSystem/ConsoleBillingSystem/Properties/AssemblyInfo.cs
+TheBillingSystem/ContourBillingSystem/Properties/AssemblyInfo.cs
+TheBillingSystem/ContoursOfTheInformationProvided/Properties/AssemblyInfo.cs
+TheBillingSystem/ModelBillingSystem/Properties/AssemblyInfo.cs
+TheBillingSystem/ModelOfTheInformationProvided/Properties/AssemblyInfo.cs
+TheBillingSystem/ServiceBillingSystem/Properties/AssemblyInfo.cs
