@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ManagerCloudContext.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ManagerCloudContextStoreContainer">
+    <EntitySet Name="ClientSet" EntityType="ManagerCloudContext.Store.ClientSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SaleSet" EntityType="ManagerCloudContext.Store.SaleSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ItemSet" EntityType="ManagerCloudContext.Store.ItemSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DataSourceSet" EntityType="ManagerCloudContext.Store.DataSourceSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ClientSale" Association="ManagerCloudContext.Store.ClientSale">
+      <End Role="Client" EntitySet="ClientSet" />
+      <End Role="Sale" EntitySet="SaleSet" />
+    </AssociationSet>
+    <AssociationSet Name="ItemSale" Association="ManagerCloudContext.Store.ItemSale">
+      <End Role="Item" EntitySet="ItemSet" />
+      <End Role="Sale" EntitySet="SaleSet" />
+    </AssociationSet>
+    <AssociationSet Name="DataSourceSale" Association="ManagerCloudContext.Store.DataSourceSale">
+      <End Role="DataSource" EntitySet="DataSourceSet" />
+      <End Role="Sale" EntitySet="SaleSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ClientSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SaleSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="SaleSum" Type="float" Nullable="false" />
+    <Property Name="DataSourceId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DataSourceSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="ClientSale">
+    <End Role="Client" Type="ManagerCloudContext.Store.ClientSet" Multiplicity="1" />
+    <End Role="Sale" Type="ManagerCloudContext.Store.SaleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sale">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ItemSale">
+    <End Role="Item" Type="ManagerCloudContext.Store.ItemSet" Multiplicity="1" />
+    <End Role="Sale" Type="ManagerCloudContext.Store.SaleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sale">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DataSourceSale">
+    <End Role="DataSource" Type="ManagerCloudContext.Store.DataSourceSet" Multiplicity="1" />
+    <End Role="Sale" Type="ManagerCloudContext.Store.SaleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DataSource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sale">
+        <PropertyRef Name="DataSourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ManagerCloudContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ManagerCloudContextContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClientSet" EntityType="ManagerCloudContext.Client" />
+          <EntitySet Name="SaleSet" EntityType="ManagerCloudContext.Sale" />
+          <AssociationSet Name="ClientSale" Association="ManagerCloudContext.ClientSale">
+            <End Role="Client" EntitySet="ClientSet" />
+            <End Role="Sale" EntitySet="SaleSet" />
+          </AssociationSet>
+          <EntitySet Name="ItemSet" EntityType="ManagerCloudContext.Item" />
+          <AssociationSet Name="ItemSale" Association="ManagerCloudContext.ItemSale">
+            <End Role="Item" EntitySet="ItemSet" />
+            <End Role="Sale" EntitySet="SaleSet" />
+          </AssociationSet>
+          <EntitySet Name="DataSourceSet" EntityType="ManagerCloudContext.DataSource" />
+          <AssociationSet Name="DataSourceSale" Association="ManagerCloudContext.DataSourceSale">
+            <End Role="DataSource" EntitySet="DataSourceSet" />
+            <End Role="Sale" EntitySet="SaleSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Sale" Relationship="ManagerCloudContext.ClientSale" FromRole="Client" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="ManagerCloudContext.ClientSale" FromRole="Sale" ToRole="Client" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="ManagerCloudContext.ItemSale" FromRole="Sale" ToRole="Item" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="SaleSum" Type="Double" Nullable="false" />
+          <NavigationProperty Name="DataSource" Relationship="ManagerCloudContext.DataSourceSale" FromRole="Sale" ToRole="DataSource" />
+          <Property Name="DataSourceId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ClientSale">
+          <End Type="ManagerCloudContext.Client" Role="Client" Multiplicity="1" />
+          <End Type="ManagerCloudContext.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Sale" Relationship="ManagerCloudContext.ItemSale" FromRole="Item" ToRole="Sale" />
+        </EntityType>
+        <Association Name="ItemSale">
+          <End Type="ManagerCloudContext.Item" Role="Item" Multiplicity="1" />
+          <End Type="ManagerCloudContext.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DataSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Sale" Relationship="ManagerCloudContext.DataSourceSale" FromRole="DataSource" ToRole="Sale" />
+        </EntityType>
+        <Association Name="DataSourceSale">
+          <End Type="ManagerCloudContext.DataSource" Role="DataSource" Multiplicity="1" />
+          <End Type="ManagerCloudContext.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DataSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ManagerCloudContextStoreContainer" CdmEntityContainer="ManagerCloudContextContainer">
+    <EntitySetMapping Name="ClientSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ManagerCloudContext.Client)">
+        <MappingFragment StoreEntitySet="ClientSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SaleSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ManagerCloudContext.Sale)">
+        <MappingFragment StoreEntitySet="SaleSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="SaleSum" ColumnName="SaleSum" />
+          <ScalarProperty Name="DataSourceId" ColumnName="DataSourceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ManagerCloudContext.Item)">
+        <MappingFragment StoreEntitySet="ItemSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataSourceSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ManagerCloudContext.DataSource)">
+        <MappingFragment StoreEntitySet="DataSourceSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

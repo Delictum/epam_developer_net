@@ -336,3 +336,7 @@ TheBillingSystem/ContoursOfTheInformationProvided/Properties/AssemblyInfo.cs
 TheBillingSystem/ModelBillingSystem/Properties/AssemblyInfo.cs
 TheBillingSystem/ModelOfTheInformationProvided/Properties/AssemblyInfo.cs
 TheBillingSystem/ServiceBillingSystem/Properties/AssemblyInfo.cs
+ManagerCloud/BL.ManagerCloud/Properties/AssemblyInfo.cs
+ManagerCloud/DAL.ManagerCloud/Properties/AssemblyInfo.cs
+ManagerCloud/EF.ManagerCloud/Properties/AssemblyInfo.cs
+ManagerCloud/ManagerCloudConsole/Properties/AssemblyInfo.cs

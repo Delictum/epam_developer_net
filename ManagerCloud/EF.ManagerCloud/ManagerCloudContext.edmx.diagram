@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0ac6035e31104cf8a40d792b9d6aa29a" Name="Diagram1" >
+        <EntityTypeShape EntityType="ManagerCloudContext.Client" Width="1.5" PointX="4.625" PointY="0.5" />
+        <EntityTypeShape EntityType="ManagerCloudContext.Sale" Width="1.5" PointX="6.875" PointY="0.5" />
+        <AssociationConnector Association="ManagerCloudContext.ClientSale" />
+        <EntityTypeShape EntityType="ManagerCloudContext.Item" Width="1.5" PointX="9.125" PointY="0.5" />
+        <AssociationConnector Association="ManagerCloudContext.ItemSale" />
+        <EntityTypeShape EntityType="ManagerCloudContext.DataSource" Width="1.5" PointX="9.125" PointY="2.5" />
+        <AssociationConnector Association="ManagerCloudContext.DataSourceSale" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
