@@ -345,3 +345,4 @@ ManagerCloud/ManagerCloud.EF/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.BL/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.Console/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.DAL/Properties/AssemblyInfo.cs
+ManagerCloud/ManagerCloud.Core/Properties/AssemblyInfo.cs

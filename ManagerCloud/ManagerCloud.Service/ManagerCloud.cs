@@ -1,43 +1,69 @@
-﻿using System.Configuration;
+﻿using ManagerCloud.BL;
+using ManagerCloud.Core;
+using System;
+using System.Configuration;
 using System.ServiceProcess;
-using ManagerCloud.BL;
+using System.Threading;
 
 namespace ManagerCloud.Service
 {
     public partial class ManagerCloud : ServiceBase
     {
         private readonly string _directoryPath;
-        private Unity unity;
+        private readonly Unity _unity;
 
         public ManagerCloud()
         {
             InitializeComponent();
             CanStop = true;
             CanPauseAndContinue = true;
-            AutoLog = true;
 
             _directoryPath = ConfigurationManager.AppSettings["DirectoryPath"];
             var fileNameFilter = ConfigurationManager.AppSettings["FileNameFilter"];
-            unity = new Unity(_directoryPath, fileNameFilter);
+            _unity = new Unity(_directoryPath, fileNameFilter);
         }
 
         protected override void OnStart(string[] args)
         {
-            unity.StartFileWatcher(_directoryPath);
+            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Start service - ", DateTime.Now));
+            StartTaskWatcher();
+            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Start file watcher - ", DateTime.Now));
         }
 
         protected override void OnStop()
         {
+            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Stop service - ", DateTime.Now));
+            eventLog.Dispose();
         }
 
         protected override void OnPause()
         {
-            unity.StopFileWatcher();
+            _unity.StopFileWatcher();
+            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Pause service - ", DateTime.Now));
         }
 
         protected override void OnContinue()
         {
-            unity.StartFileWatcher(_directoryPath);
+            StartTaskWatcher();
+            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Resume service - ", DateTime.Now));
+        }
+
+        protected void StartTaskWatcher()
+        {
+            var thread = new Thread(StartWatcher)
+            {
+                IsBackground = true,
+                Name = "StartWatcher"
+            };
+            thread.Start();
+        }
+
+        private void StartWatcher()
+        {
+            while (true)
+            {
+                _unity.StartFileWatcher(_directoryPath);
+            }
         }
     }
 }

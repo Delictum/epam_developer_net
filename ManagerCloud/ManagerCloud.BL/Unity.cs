@@ -85,11 +85,6 @@ namespace ManagerCloud.BL
 
         private bool CheckDirectoryContainFiles(string directoryPath) =>
             Directory.Exists(directoryPath) && GetFiles(directoryPath).Any();
-
-        ~Unity()
-        {
-            _watcher?.Dispose();
-        }
     }
 }
 

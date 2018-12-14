@@ -53,6 +53,7 @@
     <Compile Include="Installer.Designer.cs">
       <DependentUpon>Installer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="ManagerCloud.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -71,6 +72,11 @@
       <Project>{B28E6ABE-1A28-4CA5-9117-A80D9704C7AB}</Project>
       <Name>ManagerCloud.BL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ManagerCloud.resx">
+      <DependentUpon>ManagerCloud.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
