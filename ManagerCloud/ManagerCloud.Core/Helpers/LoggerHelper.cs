@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ManagerCloud.Core.Helpers
@@ -15,7 +16,7 @@ namespace ManagerCloud.Core.Helpers
                 }
 
                 eventLog.Source = "ManagerCloud";
-                eventLog.WriteEntry(log, EventLogEntryType.Information);
+                eventLog.WriteEntry(string.Join(" - ", log, DateTime.Now), EventLogEntryType.Information);
             }
             catch
             {
@@ -33,7 +34,7 @@ namespace ManagerCloud.Core.Helpers
                 }
 
                 eventLog.Source = "ManagerCloud";
-                eventLog.WriteEntry(log, EventLogEntryType.Error);
+                eventLog.WriteEntry(string.Join(" - ", log, DateTime.Now), EventLogEntryType.Error);
             }
             catch
             {

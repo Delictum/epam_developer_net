@@ -9,8 +9,9 @@ namespace ManagerCloud.Console
     {
         private static void Main(string[] args)
         {
+            System.Console.Title = "Manager cloud";
             var service = ServerInteraction.GetService("ManagerCloud");
-            if (service != null &&(service.Status == ServiceControllerStatus.Running || service.Status == ServiceControllerStatus.StartPending))
+            if (service != null && (service.Status == ServiceControllerStatus.Running || service.Status == ServiceControllerStatus.StartPending))
             {
                 DisplayReferenceInformation.OfferCloseServer();
                 if (System.Console.Read() != 'y')

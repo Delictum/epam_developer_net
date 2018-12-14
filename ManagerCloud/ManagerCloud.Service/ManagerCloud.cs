@@ -1,6 +1,8 @@
 ﻿using ManagerCloud.BL;
 using System;
 using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
 using System.ServiceProcess;
 using System.Threading;
 using ManagerCloud.Core.Helpers;
@@ -25,27 +27,37 @@ namespace ManagerCloud.Service
 
         protected override void OnStart(string[] args)
         {
-            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Start service - ", DateTime.Now));
+            if (CheckProcessConsole())
+            {
+                LoggerHelper.AddErrorLog(eventLog, "The service cannot be started while the console application is running");
+                Environment.Exit(0);
+            }
+            LoggerHelper.AddInfoLog(eventLog, "Start service");
             StartTaskWatcher();
-            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Start file watcher - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, "Start file watcher");
         }
 
         protected override void OnStop()
         {
-            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Stop service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, "Stop service");
             eventLog.Dispose();
         }
 
         protected override void OnPause()
         {
             _unity.StopFileWatcher();
-            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Pause service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, "Pause service");
         }
 
         protected override void OnContinue()
         {
+            if (CheckProcessConsole())
+            {
+                LoggerHelper.AddErrorLog(eventLog, "The service cannot be started while the console application is running");
+                Environment.Exit(0);
+            }
             StartTaskWatcher();
-            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Resume service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, "Resume service");
         }
 
         protected void StartTaskWatcher()
@@ -60,10 +72,14 @@ namespace ManagerCloud.Service
 
         private void StartWatcher()
         {
+            LoggerHelper.AddInfoLog(eventLog, "Start watcher in service");
+            _unity.StartFileWatcher(_directoryPath);
             while (true)
             {
-                _unity.StartFileWatcher(_directoryPath);
             }
         }
+
+        private static bool CheckProcessConsole() => Process.GetProcessesByName("ManagerCloud.Console").Any();
+
     }
 }
