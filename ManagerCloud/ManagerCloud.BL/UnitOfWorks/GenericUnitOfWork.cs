@@ -1,4 +1,5 @@
-﻿using ManagerCloud.DAL.Contracts;
+﻿using ManagerCloud.Core.Helpers;
+using ManagerCloud.DAL.Contracts;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace ManagerCloud.BL.UnitOfWorks
 
         public TModel TryGet(Expression<Func<TModel, bool>> searchExpression)
         {
-            var entityRepository = _repoFactory.CreateInstance<TEntity>(_context);
+            var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
 
             var newExpression = searchExpression.Project<TModel, TEntity>();
 
@@ -32,8 +33,8 @@ namespace ManagerCloud.BL.UnitOfWorks
 
             try
             {
-                var user = entityRepository.Get().FirstOrDefault(newExpression);
-                return user != null ? ToModel.Invoke(user) : null;
+                var searchedElement = repositoryElement.Get().FirstOrDefault(newExpression);
+                return searchedElement != null ? ToModel.Invoke(searchedElement) : null;
             }
             finally
             {
@@ -41,23 +42,23 @@ namespace ManagerCloud.BL.UnitOfWorks
             }
         }
 
-        public TEntity TryAdd(TModel customer, Expression<Func<TModel, bool>> searchExpression)
+        public TEntity TryAdd(TModel modelElement, Expression<Func<TModel, bool>> searchExpression)
         {
-            TEntity newCustomer;
+            TEntity newEntityElement;
             _locker.EnterWriteLock();
 
             try
             {
-                var item = TryGet(searchExpression);
-                if (item != null)
+                var searchedElement = TryGet(searchExpression);
+                if (searchedElement != null)
                 {
-                    newCustomer = ToEntity(item);
-                    return newCustomer;
+                    newEntityElement = ToEntity(searchedElement);
+                    return newEntityElement;
                 }
 
-                var userRepository = _repoFactory.CreateInstance<TEntity>(_context);
-                newCustomer = ToEntity(customer);
-                userRepository.Add(newCustomer);
+                var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
+                newEntityElement = ToEntity(modelElement);
+                repositoryElement.Add(newEntityElement);
                 _context.SaveChanges();
             }
             finally
@@ -65,17 +66,20 @@ namespace ManagerCloud.BL.UnitOfWorks
                 _locker.ExitWriteLock();
             }
 
-            return newCustomer;
+            return newEntityElement;
         }
 
-        public void TryUpdate(TEntity customer, Expression<Func<TModel, bool>> searchExpression)
+        public void TryUpdate(TEntity entityElement, Expression<Func<TModel, bool>> searchExpression)
         {
             _locker.EnterWriteLock();
             try
             {
-                if (TryGet(searchExpression) == null) return;
-                var userRepository = _repoFactory.CreateInstance<TEntity>(_context);
-                userRepository.Update(customer);
+                if (TryGet(searchExpression) == null)
+                {
+                    return;
+                }
+                var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
+                repositoryElement.Update(entityElement);
                 _context.SaveChanges();
             }
             finally
@@ -84,15 +88,18 @@ namespace ManagerCloud.BL.UnitOfWorks
             }
         }
 
-        public void TryRemove(TEntity customer, Expression<Func<TModel, bool>> searchExpression)
+        public void TryRemove(TEntity entityElement, Expression<Func<TModel, bool>> searchExpression)
         {
             _locker.EnterWriteLock();
             try
             {
-                if (TryGet(searchExpression) == null) return;
+                if (TryGet(searchExpression) == null)
+                {
+                    return;
+                }
 
-                var userRepository = _repoFactory.CreateInstance<TEntity>(_context);
-                userRepository.Remove(customer);
+                var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
+                repositoryElement.Remove(entityElement);
                 _context.SaveChanges();
             }
             finally
@@ -103,7 +110,7 @@ namespace ManagerCloud.BL.UnitOfWorks
 
         public TEntity TryEntityGet(Expression<Func<TModel, bool>> searchExpression)
         {
-            var entityRepository = _repoFactory.CreateInstance<TEntity>(_context);
+            var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
 
             var newExpression = searchExpression.Project<TModel, TEntity>();
 
@@ -111,8 +118,8 @@ namespace ManagerCloud.BL.UnitOfWorks
 
             try
             {
-                var user = entityRepository.Get().FirstOrDefault(newExpression);
-                return user;
+                var entityElement = repositoryElement.Get().FirstOrDefault(newExpression);
+                return entityElement;
             }
             finally
             {

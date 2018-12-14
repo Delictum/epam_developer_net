@@ -53,7 +53,6 @@
     <Compile Include="Installer.Designer.cs">
       <DependentUpon>Installer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logger.cs" />
     <Compile Include="ManagerCloud.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -71,6 +70,10 @@
     <ProjectReference Include="..\ManagerCloud.BL\ManagerCloud.BL.csproj">
       <Project>{B28E6ABE-1A28-4CA5-9117-A80D9704C7AB}</Project>
       <Name>ManagerCloud.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ManagerCloud.Core\ManagerCloud.Core.csproj">
+      <Project>{567B1E6E-B598-45D1-B360-69BC367D639D}</Project>
+      <Name>ManagerCloud.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

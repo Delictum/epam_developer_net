@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.BL", "ManagerC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.Console", "ManagerCloud.Console\ManagerCloud.Console.csproj", "{CA13C98C-8E9F-491F-8632-4566CC5BB4D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.Core", "ManagerCloud.Core\ManagerCloud.Core.csproj", "{567B1E6E-B598-45D1-B360-69BC367D639D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CA13C98C-8E9F-491F-8632-4566CC5BB4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA13C98C-8E9F-491F-8632-4566CC5BB4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA13C98C-8E9F-491F-8632-4566CC5BB4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567B1E6E-B598-45D1-B360-69BC367D639D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567B1E6E-B598-45D1-B360-69BC367D639D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567B1E6E-B598-45D1-B360-69BC367D639D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567B1E6E-B598-45D1-B360-69BC367D639D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

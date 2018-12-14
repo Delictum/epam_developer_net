@@ -1,9 +1,9 @@
 ﻿using ManagerCloud.BL;
-using ManagerCloud.Core;
 using System;
 using System.Configuration;
 using System.ServiceProcess;
 using System.Threading;
+using ManagerCloud.Core.Helpers;
 
 namespace ManagerCloud.Service
 {
@@ -25,27 +25,27 @@ namespace ManagerCloud.Service
 
         protected override void OnStart(string[] args)
         {
-            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Start service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Start service - ", DateTime.Now));
             StartTaskWatcher();
-            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Start file watcher - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Start file watcher - ", DateTime.Now));
         }
 
         protected override void OnStop()
         {
-            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Stop service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Stop service - ", DateTime.Now));
             eventLog.Dispose();
         }
 
         protected override void OnPause()
         {
             _unity.StopFileWatcher();
-            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Pause service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Pause service - ", DateTime.Now));
         }
 
         protected override void OnContinue()
         {
             StartTaskWatcher();
-            Logger.AddInfoLog(eventLog, string.Join(string.Empty, "Resume service - ", DateTime.Now));
+            LoggerHelper.AddInfoLog(eventLog, string.Join(string.Empty, "Resume service - ", DateTime.Now));
         }
 
         protected void StartTaskWatcher()

@@ -79,10 +79,10 @@ namespace ManagerCloud.BL.UnitOfWorks
             _locker.EnterWriteLock();
             try
             {
-                var getSale = TryGet(searchExpression);
-                if (getSale != null)
+                var searchedSale = TryGet(searchExpression);
+                if (searchedSale != null)
                 {
-                    newSale = ToEntity(getSale);
+                    newSale = ToEntity(searchedSale);
                     return newSale;
                 }
 

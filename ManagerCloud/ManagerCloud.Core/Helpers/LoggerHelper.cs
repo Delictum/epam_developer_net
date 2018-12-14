@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace ManagerCloud.Core
+namespace ManagerCloud.Core.Helpers
 {
-    public static class Logger
+    public static class LoggerHelper
     {
         public static void AddInfoLog(EventLog eventLog, string log)
         {

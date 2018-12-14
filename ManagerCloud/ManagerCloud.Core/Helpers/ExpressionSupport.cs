@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ManagerCloud.BL
+namespace ManagerCloud.Core.Helpers
 {
     public static class ExpressionSupport
     {
