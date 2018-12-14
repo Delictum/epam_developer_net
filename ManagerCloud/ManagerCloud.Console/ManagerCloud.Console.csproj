@@ -38,19 +38,18 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayReferenceInformation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ManagerCloud.EF\ManagerCloud.EF.csproj">
-      <Project>{7b33566f-078b-4e0d-ad84-3218509e7a27}</Project>
-      <Name>ManagerCloud.EF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ManagerCloud.BL\ManagerCloud.BL.csproj">
       <Project>{B28E6ABE-1A28-4CA5-9117-A80D9704C7AB}</Project>
       <Name>ManagerCloud.BL</Name>

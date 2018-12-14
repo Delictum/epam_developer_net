@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ManagerCloud.Core.Helpers;
 
 namespace ManagerCloud.BL
 {
@@ -51,8 +53,29 @@ namespace ManagerCloud.BL
             }
         }
 
-        private static void StartTaskFileParse(string fileName, string fullPath) => 
-            Task.Factory.StartNew(() => ParserCsv.ReadFile(fullPath, fileName, _lockers));
+        private static void StartTaskFileParse(string fileName, string fullPath)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => ParserCsv.ReadFile(fullPath, fileName, _lockers));
+            }
+            catch (FileNotFoundException e)
+            {
+                LoggerHelper.AddErrorLog(new EventLog(), e.Message);
+            }
+            catch (IOException e)
+            {
+                LoggerHelper.AddErrorLog(new EventLog(), e.Message);
+            }
+            catch (NotSupportedException e)
+            {
+                LoggerHelper.AddErrorLog(new EventLog(), e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                LoggerHelper.AddErrorLog(new EventLog(), e.Message);
+            }
+        }
 
         public void StartFileWatcher(string directoryPath)
         {

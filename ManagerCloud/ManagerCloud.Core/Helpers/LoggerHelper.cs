@@ -23,6 +23,24 @@ namespace ManagerCloud.Core.Helpers
             }
         }
 
+        public static void AddErrorLog(EventLog eventLog, string log)
+        {
+            try
+            {
+                if (!EventLog.SourceExists("ManagerCloud"))
+                {
+                    EventLog.CreateEventSource("ManagerCloud", "ManagerCloud");
+                }
+
+                eventLog.Source = "ManagerCloud";
+                eventLog.WriteEntry(log, EventLogEntryType.Error);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
         public static IReadOnlyCollection<string> ReadEventLogEntries(EventLog eventLog)
         {
             var listEntries = new List<string>();

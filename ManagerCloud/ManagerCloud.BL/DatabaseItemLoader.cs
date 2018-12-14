@@ -1,9 +1,12 @@
 ﻿using ManagerCloud.BL.UnitOfWorks;
+using ManagerCloud.Core.CustomExceptions.ModelObjectException;
+using ManagerCloud.Core.Helpers;
 using ManagerCloud.DAL;
 using ManagerCloud.DAL.Contracts;
 using ManagerCloud.EF;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Threading;
 
@@ -50,13 +53,20 @@ namespace ManagerCloud.BL
 
         internal void LoadItems(Tuple<Models.Client, Models.Item, Models.DataSource, Models.Sale> lineFileItems)
         {
-            var client = AddClient(lineFileItems.Item1);
-            var item = AddItem(lineFileItems.Item2);
-            var dataSource = AddDataSource(lineFileItems.Item3);
+            try
+            {
+                var client = AddClient(lineFileItems.Item1);
+                var item = AddItem(lineFileItems.Item2);
+                var dataSource = AddDataSource(lineFileItems.Item3);
 
-            ChangeSale(lineFileItems.Item4, client.Id, item.Id, dataSource.Id);
+                ChangeSale(lineFileItems.Item4, client.Id, item.Id, dataSource.Id);
 
-            AddSale(lineFileItems.Item4);
+                AddSale(lineFileItems.Item4);
+            }
+            catch (ModelObjectException e)
+            {
+                LoggerHelper.AddErrorLog(new EventLog("LoadItemsError"), e.Message);
+            }
         }
 
         public DataSource AddDataSource(Models.DataSource newDataSource)

@@ -1,5 +1,7 @@
-﻿using System.Configuration;
-using ManagerCloud.BL;
+﻿using ManagerCloud.BL;
+using System;
+using System.Configuration;
+using System.ServiceProcess;
 
 namespace ManagerCloud.Console
 {
@@ -7,12 +9,33 @@ namespace ManagerCloud.Console
     {
         private static void Main(string[] args)
         {
+            var service = ServerInteraction.GetService("ManagerCloud");
+            if (service != null &&(service.Status == ServiceControllerStatus.Running || service.Status == ServiceControllerStatus.StartPending))
+            {
+                DisplayReferenceInformation.OfferCloseServer();
+                if (System.Console.Read() != 'y')
+                {
+                    Environment.Exit(0);
+                }
+
+                try
+                {
+                    ServerInteraction.StopService("ManagerCloud");
+                }
+                catch (Exception)
+                {
+                    DisplayReferenceInformation.ExitConsole();
+                    Environment.Exit(0);
+                }
+            }
+
             var directoryPath = ConfigurationManager.AppSettings["DirectoryPath"];
             var fileNameFilter = ConfigurationManager.AppSettings["FileNameFilter"];
 
+            DisplayReferenceInformation.MeetWelcome();
+
             var u = new Unity(directoryPath, fileNameFilter);
 
-            System.Console.WriteLine("Press \'q\' to quit the programm.");
             while (System.Console.Read() != 'q')
             {
             }

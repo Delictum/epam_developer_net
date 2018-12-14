@@ -1,4 +1,5 @@
 ﻿using ManagerCloud.BL.Models;
+using ManagerCloud.Core.CustomExceptions.ModelObjectException;
 using ManagerCloud.DAL.Contracts;
 using System;
 using System.Data.Entity;
@@ -90,10 +91,15 @@ namespace ManagerCloud.BL.UnitOfWorks
                 newSale = ToEntity(sale);
 
                 DatabaseItemLoader.DisableAddingSecondaryEntitiesFromSale(newSale);
-                DatabaseItemLoader.EnableAddingForeignKeysFromSale(newSale, new []{ sale.Client.Id, sale.Item.Id, sale.DataSource.Id });
+                DatabaseItemLoader.EnableAddingForeignKeysFromSale(newSale,
+                    new[] { sale.Client.Id, sale.Item.Id, sale.DataSource.Id} );
 
                 saleRepository.Add(newSale);
                 _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw new ObjectAdditionException(sale);
             }
             finally
             {

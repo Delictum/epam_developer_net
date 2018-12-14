@@ -1,4 +1,5 @@
-﻿using ManagerCloud.Core.Helpers;
+﻿using ManagerCloud.Core.CustomExceptions.ModelObjectException;
+using ManagerCloud.Core.Helpers;
 using ManagerCloud.DAL.Contracts;
 using System;
 using System.Data.Entity;
@@ -60,6 +61,10 @@ namespace ManagerCloud.BL.UnitOfWorks
                 newEntityElement = ToEntity(modelElement);
                 repositoryElement.Add(newEntityElement);
                 _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw new ObjectAdditionException(modelElement);
             }
             finally
             {
