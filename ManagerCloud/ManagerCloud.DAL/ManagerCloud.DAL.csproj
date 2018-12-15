@@ -41,15 +41,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericRepository.cs" />
-    <Compile Include="GenericRepositoryFactory.cs" />
-    <Compile Include="Contracts\IGenericRepository.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\ClientRepository.cs" />
+    <Compile Include="Repositories\DataSourceRepository.cs" />
+    <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\SaleRepository.cs" />
+    <Compile Include="RepositoryFactory.cs" />
+    <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\IRepositoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManagerCloud.EF\ManagerCloud.EF.csproj">
+      <Project>{7b33566f-078b-4e0d-ad84-3218509e7a27}</Project>
+      <Name>ManagerCloud.EF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

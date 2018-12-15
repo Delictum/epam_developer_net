@@ -41,6 +41,7 @@ namespace ManagerCloud.BL
                 ((IDisposable) textFile).Dispose();
             }
             MoveOrReplaceFile(fullPath, invalid);
+            LoggerHelper.AddInfoLog(new EventLog(), string.Join(string.Empty, "File \"", fileName, "\" processing completed"));
         }
 
         private static void MoveOrReplaceFile(string fullPath, bool invalid)
@@ -59,7 +60,7 @@ namespace ManagerCloud.BL
             File.Move(fullPath, newFullPath);
         }
 
-        private static void ParseStringLine(string fileName, string stringLine, Dictionary<Type, ReaderWriterLockSlim> lockers)
+        private static void ParseStringLine(string fileName, string stringLine, IDictionary<Type, ReaderWriterLockSlim> lockers)
         {
             if (string.IsNullOrEmpty(stringLine))
                 throw new ParserException(fileName, _currentLine);
