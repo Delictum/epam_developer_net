@@ -1,6 +1,5 @@
 ﻿using ManagerCloud.BL;
 using System;
-using System.Configuration;
 using System.ServiceProcess;
 
 namespace ManagerCloud.Console
@@ -11,7 +10,8 @@ namespace ManagerCloud.Console
         {
             System.Console.Title = "Manager cloud";
             var service = ServerInteraction.GetService("ManagerCloud");
-            if (service != null && (service.Status == ServiceControllerStatus.Running || service.Status == ServiceControllerStatus.StartPending))
+            if (service != null && (service.Status == ServiceControllerStatus.Running ||
+                                    service.Status == ServiceControllerStatus.StartPending))
             {
                 DisplayReferenceInformation.OfferCloseServer();
                 if (System.Console.Read() != 'y')
@@ -30,13 +30,10 @@ namespace ManagerCloud.Console
                 }
             }
 
-            var directoryPath = ConfigurationManager.AppSettings["DirectoryPath"];
-            var fileNameFilter = ConfigurationManager.AppSettings["FileNameFilter"];
-
             DisplayReferenceInformation.MeetWelcome();
 
-            var u = new Unity(directoryPath, fileNameFilter);
-
+            var u = new Unity();
+            
             while (System.Console.Read() != 'q')
             {
             }

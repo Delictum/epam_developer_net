@@ -1,15 +1,14 @@
-﻿using System;
+﻿using ManagerCloud.BL.Models;
+using ManagerCloud.Core.CustomExceptions.ParserException;
+using ManagerCloud.Core.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
-using ManagerCloud.BL.Models;
-using ManagerCloud.Core.CustomExceptions.ParserException;
-using ManagerCloud.Core.Helpers;
 
 namespace ManagerCloud.BL
 {
-    internal static class ParserCsv
+    internal static class Parser
     {
         private const int CorrectItemCount = 4;
         private const string FolderNameProcessedFiles = "Processed";
@@ -17,8 +16,9 @@ namespace ManagerCloud.BL
         private const int ClientPropertiesCount = 2;
         private static int _currentLine;
 
-        internal static void ReadFile(string fullPath, string fileName, Dictionary<Type, ReaderWriterLockSlim> lockers)
+        internal static IList<string[]> ReadCsvFile(string fullPath, string fileName)
         {
+            IList<string[]> listStringLine = new List<string[]>();
             var textFile = File.OpenText(fullPath);
             _currentLine = 0;
             var invalid = false;
@@ -28,7 +28,7 @@ namespace ManagerCloud.BL
                 {
                     _currentLine++;
                     var stringLine = textFile.ReadLine();
-                    ParseStringLine(fileName, stringLine, lockers);
+                    listStringLine.Add(ParseCsvStringLine(fileName, stringLine));
                 }
             }
             catch (ParserException e)
@@ -40,11 +40,12 @@ namespace ManagerCloud.BL
             {
                 ((IDisposable) textFile).Dispose();
             }
-            MoveOrReplaceFile(fullPath, invalid);
+            MoveFile(fullPath, invalid);
             LoggerHelper.AddInfoLog(new EventLog(), string.Join(string.Empty, "File \"", fileName, "\" processing completed"));
+            return listStringLine;
         }
 
-        private static void MoveOrReplaceFile(string fullPath, bool invalid)
+        private static void MoveFile(string fullPath, bool invalid)
         {
             var fileName = Path.GetFileName(fullPath);
             var currentDirectory = Path.GetDirectoryName(fullPath);
@@ -60,7 +61,7 @@ namespace ManagerCloud.BL
             File.Move(fullPath, newFullPath);
         }
 
-        private static void ParseStringLine(string fileName, string stringLine, IDictionary<Type, ReaderWriterLockSlim> lockers)
+        private static string[] ParseCsvStringLine(string fileName, string stringLine)
         {
             if (string.IsNullOrEmpty(stringLine))
                 throw new ParserException(fileName, _currentLine);
@@ -69,11 +70,10 @@ namespace ManagerCloud.BL
             if (!CheckCorrectItemCount(itemsStringLine.Length))
                 throw new ParserItemCountException(itemsStringLine.Length, CorrectItemCount, fileName, _currentLine);
 
-            var dataBaseItemLoader = new DatabaseItemLoader(lockers);
-            dataBaseItemLoader.LoadItems(ParseEntitiesToTuple(fileName, itemsStringLine));
+            return itemsStringLine;
         }
 
-        private static Tuple<Client, Item, DataSource, Sale> ParseEntitiesToTuple(string fileName, IReadOnlyList<string> itemStringLine)
+        public static Tuple<Client, Item, DataSource, Sale> ParseEntitiesToTuple(string fileName, IReadOnlyList<string> itemStringLine)
         {
             var clientProperties = ParseClientItem(itemStringLine[1]);
             if (clientProperties.Length != ClientPropertiesCount)

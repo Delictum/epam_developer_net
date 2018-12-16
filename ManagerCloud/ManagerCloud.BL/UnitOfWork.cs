@@ -1,5 +1,7 @@
-﻿using ManagerCloud.Core.CustomExceptions.ModelObjectException;
+﻿using ManagerCloud.BL.Models;
+using ManagerCloud.Core.CustomExceptions.ModelObjectException;
 using ManagerCloud.Core.Helpers;
+using ManagerCloud.DAL;
 using ManagerCloud.DAL.Contracts;
 using System;
 using System.Collections.Generic;
@@ -7,20 +9,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
-using ManagerCloud.BL.Models;
-using ManagerCloud.DAL;
-using ManagerCloud.DAL.Repositories;
 
 namespace ManagerCloud.BL
 {
     public class UnitOfWork : IDisposable
     {
         protected DbContext Context { get; }
-        public IRepository<EF.Client> ClientRepository { get; set; }
-        public IRepository<EF.Item> ItemRepository { get; set; }
-        public IRepository<EF.DataSource> DataSourceRepository { get; set; }
-        public IRepository<EF.Sale> SaleRepository { get; set; }
-        public IDictionary<Type, ReaderWriterLockSlim> Lockers { get; }
+        protected IRepository<EF.Client> ClientRepository { get; set; }
+        protected IRepository<EF.Item> ItemRepository { get; set; }
+        protected IRepository<EF.DataSource> DataSourceRepository { get; set; }
+        protected IRepository<EF.Sale> SaleRepository { get; set; }
+        protected IDictionary<Type, ReaderWriterLockSlim> Lockers { get; }
 
         public UnitOfWork(DbContext context, IDictionary<Type, ReaderWriterLockSlim> lockers)
         {
@@ -37,7 +36,7 @@ namespace ManagerCloud.BL
             SaleRepository = new RepositoryFactory().CreateInstanceSale(Context);
         }
 
-        private ReaderWriterLockSlim ResolveLocker(Type modelType)
+        public ReaderWriterLockSlim ResolveLocker(Type modelType)
         {
             return Lockers[modelType];
         }
@@ -72,7 +71,7 @@ namespace ManagerCloud.BL
             }
         }
 
-        public void TryAddClient(Client client, Expression<Func<Client, bool>> searchExpression)
+        public bool TryAddClient(Client client, Expression<Func<Client, bool>> searchExpression)
         {
             ResolveLocker(typeof(Client)).EnterWriteLock();
             try
@@ -80,10 +79,12 @@ namespace ManagerCloud.BL
                 var searchedClient = GetEntity(searchExpression, ClientRepository);
                 if (searchedClient != null)
                 {
-                    return;
+                    return false;
                 }
                 
                 ClientRepository.Add(new EF.Client { FirstName = client.FirstName, LastName = client.LastName});
+                ClientRepository.Save();
+                return true;
             }
             catch (Exception)
             {
@@ -95,7 +96,7 @@ namespace ManagerCloud.BL
             }
         }
 
-        public void TryAddItem(Item item, Expression<Func<Item, bool>> searchExpression)
+        public bool TryAddItem(Item item, Expression<Func<Item, bool>> searchExpression)
         {
             ResolveLocker(typeof(Item)).EnterWriteLock();
             try
@@ -103,10 +104,12 @@ namespace ManagerCloud.BL
                 var searchedItem = GetEntity(searchExpression, ItemRepository);
                 if (searchedItem != null)
                 {
-                    return;
+                    return false;
                 }
 
                 ItemRepository.Add(new EF.Item { Name = item.Name});
+                ItemRepository.Save();
+                return true;
             }
             catch (Exception)
             {
@@ -118,7 +121,7 @@ namespace ManagerCloud.BL
             }
         }
 
-        public void TryAddDataSource(DataSource dataSource, Expression<Func<DataSource, bool>> searchExpression)
+        public bool TryAddDataSource(DataSource dataSource, Expression<Func<DataSource, bool>> searchExpression)
         {
             ResolveLocker(typeof(DataSource)).EnterWriteLock();
             try
@@ -126,10 +129,12 @@ namespace ManagerCloud.BL
                 var searchedDataSource = GetEntity(searchExpression, DataSourceRepository);
                 if (searchedDataSource != null)
                 {
-                    return;
+                    return false;
                 }
 
                 DataSourceRepository.Add(new EF.DataSource { FileName = dataSource.FileName});
+                DataSourceRepository.Save();
+                return true;
             }
             catch (Exception)
             {
@@ -140,23 +145,8 @@ namespace ManagerCloud.BL
                 ResolveLocker(typeof(DataSource)).ExitWriteLock();
             }
         }
-
-        public void VerifyInContext<T>(List<T> entities) where T : class 
-        {
-            if (entities == null)
-                return;
-
-            var localStorage = Context.Set<T>().Local;
-            foreach (var entity in entities)
-            {
-                if (localStorage.All(e => !ReferenceEquals(e, entity)))
-                {
-                    throw new Exception(string.Format("Entity {0} must be in context", typeof(T).Name));
-                }
-            }
-        }
-
-        public void TryAddSale(Sale sale, Expression<Func<Sale, bool>> searchExpression)
+        
+        public bool TryAddSale(Sale sale, Expression<Func<Sale, bool>> searchExpression)
         {
             ResolveLocker(typeof(Sale)).EnterWriteLock();
             try
@@ -165,7 +155,7 @@ namespace ManagerCloud.BL
                 var searchedSale = GetEntity(searchExpression, SaleRepository);
                 if (searchedSale != null)
                 {
-                    return;
+                    return false;
                 }
 
                 Expression<Func<Client, bool>> clientSearchCriteria = x =>
@@ -181,6 +171,8 @@ namespace ManagerCloud.BL
                 var dataSourceId = GetEntityId(dataSourcetSearchCriteria, DataSourceRepository);
 
                 SaleRepository.Add(new EF.Sale { Date = sale.Date, SaleSum = sale.SaleSum, ClientId = clientId, DataSourceId = dataSourceId, ItemId = itemId });
+                SaleRepository.Save();
+                return true;
             }
             catch (Exception)
             {
@@ -192,9 +184,20 @@ namespace ManagerCloud.BL
             }
         }
 
-        public void SaveChanges()
+        //Not used
+        public void VerifyInContext<TEntity>(List<TEntity> entities) where TEntity : class
         {
-            Context.SaveChanges();
+            if (entities == null)
+                return;
+
+            var localStorage = Context.Set<TEntity>().Local;
+            foreach (var entity in entities)
+            {
+                if (localStorage.All(e => !ReferenceEquals(e, entity)))
+                {
+                    throw new Exception($"Entity {typeof(TEntity).Name} must be in context");
+                }
+            }
         }
 
         public void AsNoLazyLoading()
@@ -203,44 +206,24 @@ namespace ManagerCloud.BL
             Context.Configuration.ProxyCreationEnabled = false;
         }
 
-        //public void TryUpdate(TEntity entityElement, Expression<Func<TModel, bool>> searchExpression)
-        //{
-        //    _locker.EnterWriteLock();
-        //    try
-        //    {
-        //        if (Get(searchExpression) == null)
-        //        {
-        //            return;
-        //        }
-        //        var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
-        //        repositoryElement.Update(entityElement);
-        //        _context.SaveChanges();
-        //    }
-        //    finally
-        //    {
-        //        _locker.ExitWriteLock();
-        //    }
-        //}
+        public void TryRemove<TEntity, TModel>(Expression<Func<TModel, bool>> searchExpression, IRepository<TEntity> repository) where TEntity : class where TModel : class 
+        {
+            ResolveLocker(typeof(TModel)).EnterWriteLock();
+            try
+            {
+                var searchedElement = GetEntity<TEntity, TModel>(searchExpression, repository);
+                if (searchedElement == null)
+                {
+                    return;
+                }
 
-        //public void TryRemove(TEntity entityElement, Expression<Func<TModel, bool>> searchExpression)
-        //{
-        //    _locker.EnterWriteLock();
-        //    try
-        //    {
-        //        if (Get(searchExpression) == null)
-        //        {
-        //            return;
-        //        }
-
-        //        var repositoryElement = _repoFactory.CreateInstance<TEntity>(_context);
-        //        repositoryElement.Remove(entityElement);
-        //        _context.SaveChanges();
-        //    }
-        //    finally
-        //    {
-        //        _locker.ExitWriteLock();
-        //    }
-        //}
+                repository.Remove(searchedElement);
+            }
+            finally
+            {
+                ResolveLocker(typeof(TModel)).ExitWriteLock();
+            }
+        }
 
         public void Dispose()
         {
@@ -248,3 +231,21 @@ namespace ManagerCloud.BL
         }
     }
 }
+//public void TryUpdate<TEntity, TModel>(Expression<Func<TModel, bool>> searchExpression, IRepository<TEntity> repository) where TEntity : class where TModel : class
+//{
+//ResolveLocker(typeof(TModel)).EnterWriteLock();
+//try
+//{
+//var searchedElement = GetEntity<TEntity, TModel>(searchExpression, repository);
+//if (searchedElement == null)
+//{
+//return;
+//}
+//repositoryElement.Update(entityElement);
+//_context.SaveChanges();
+//}
+//finally
+//{
+//ResolveLocker(typeof(TModel)).ExitWriteLock();
+//}
+//}

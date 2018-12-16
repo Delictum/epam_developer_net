@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ManagerCloud.EF;
 
 namespace ManagerCloud.BL
 {
@@ -15,9 +17,10 @@ namespace ManagerCloud.BL
         public string FileFilter { get; }
         private const string FileFormat = ".csv";
         private FileSystemWatcher _watcher;
-        private static Dictionary<Type, ReaderWriterLockSlim> _lockers;
+        private Dictionary<Type, ReaderWriterLockSlim> _lockers;
+        private readonly DbContext _dbContext;
 
-        private static void InitializeLockers()
+        private void InitializeLockers()
         {
             _lockers = new Dictionary<Type, ReaderWriterLockSlim>
             {
@@ -36,12 +39,14 @@ namespace ManagerCloud.BL
             };
         }
 
-        public Unity(string directoryPath, string fileFilter)
+        public Unity()
         {
-            FileFilter = string.Join(string.Empty, fileFilter, FileFormat);
+            var contextFactory = new ManagerCloudContextFactory();
+            _dbContext = contextFactory.CreateInstance(); 
+            FileFilter = string.Join(string.Empty, ConfigurationManager.AppSettings["FileNameFilter"], FileFormat);
             InitializeLockers();
-            StartTaskAllFiles(directoryPath);
-            StartFileWatcher(directoryPath);
+            StartTaskAllFiles(ConfigurationManager.AppSettings["DirectoryPath"]);
+            StartFileWatcher(ConfigurationManager.AppSettings["DirectoryPath"]);
         }
 
         private void StartTaskAllFiles(string directoryPath)
@@ -49,15 +54,24 @@ namespace ManagerCloud.BL
             if (!CheckDirectoryContainFiles(directoryPath)) return;
             foreach (var file in GetFiles(directoryPath))
             {
-                StartTaskFileParse(Path.GetFileName(file), file);
+                StartLoadTask(Path.GetFileName(file), file);
             }
         }
 
-        private static void StartTaskFileParse(string fileName, string fullPath)
+        private void StartLoadTask(string fileName, string fullPath)
         {
             try
             {
-                Task.Factory.StartNew(() => ParserCsv.ReadFile(fullPath, fileName, _lockers));
+                Task.Factory.StartNew(() =>
+                {
+                    var fileData = Parser.ReadCsvFile(fullPath, fileName);
+                    var dbLoader = new DatabaseItemLoader(_lockers, _dbContext);
+                    foreach (var lineFile in fileData)
+                    {
+                        var tupleModels = Parser.ParseEntitiesToTuple(fileName, lineFile);
+                        dbLoader.LoadItems(tupleModels);
+                    }
+                });
             }
             catch (FileNotFoundException e)
             {
@@ -98,9 +112,9 @@ namespace ManagerCloud.BL
             _watcher.EnableRaisingEvents = false;
         }
 
-        private static void OnChanged(object source, FileSystemEventArgs e)
+        private void OnChanged(object source, FileSystemEventArgs e)
         {
-            StartTaskFileParse(e.Name, e.FullPath);
+            StartLoadTask(e.Name, e.FullPath);
         }
 
         private IEnumerable<string> GetFiles(string directoryPath) =>
@@ -108,6 +122,11 @@ namespace ManagerCloud.BL
 
         private bool CheckDirectoryContainFiles(string directoryPath) =>
             Directory.Exists(directoryPath) && GetFiles(directoryPath).Any();
+
+        ~Unity()
+        {
+            _dbContext.Dispose();
+        }
     }
 }
 

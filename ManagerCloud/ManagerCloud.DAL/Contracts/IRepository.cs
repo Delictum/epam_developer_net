@@ -12,5 +12,6 @@ namespace ManagerCloud.DAL.Contracts
         void Add(T item);
         void Remove(T item);
         void Update(T item);
+        void Save();
     }
 }

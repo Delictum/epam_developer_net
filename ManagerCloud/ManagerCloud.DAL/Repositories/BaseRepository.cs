@@ -53,6 +53,11 @@ namespace ManagerCloud.DAL.Repositories
             DbSet.Remove(item);
         }
 
+        public void Save()
+        {
+            Context.SaveChanges();
+        }
+
         public void Dispose()
         {
             Context?.Dispose();
