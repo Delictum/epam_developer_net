@@ -1,0 +1,66 @@
+﻿@using ManagerCloud.MVC.Models
+
+@model Item
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h3>Purchase form</h3>
+    <form method="post" action="">
+        @Html.ValidationSummary(true)
+        <input type="hidden" name="Id" />
+        <table>
+            <tr>
+                <td>
+                    <p>Enter client first name: </p>
+                </td>
+                <td><input type="text" name="FirstName" /> </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Enter client last name :</p>
+                </td>
+                <td>
+                    <input type="text" name="LastName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Enter the sum of the purchase:</p>
+                </td>
+                <td>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                    <input class="inputSaleSum" type="text" name="SaleSum" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(item => item.Name, new SelectList(ViewBag.Items), "Select item")
+                    @Html.ValidationMessageFor(item => item.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Submit" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @(ViewBag.Message != null ? ViewBag.Message : "")
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<@Session Script>
+<script>
+    $(".inputSaleSum").keypress(function (event) {
+        event = event || window.event;
+        if (event.charCode && event.charCode!=0 && event.charCode!=44 && (event.charCode < 48 || event.charCode > 57) )
+            return false;
+    });
+</script>
+</@Session>

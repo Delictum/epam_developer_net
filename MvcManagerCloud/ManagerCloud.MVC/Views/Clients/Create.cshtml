@@ -1,0 +1,25 @@
+﻿@model ManagerCloud.MVC.Models.Client
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New client</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="clientBlock">
+        @Html.LabelFor(model => model.FirstName, "First name")
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+        <br />
+        @Html.LabelFor(model => model.LastName, "Last name")
+        @Html.EditorFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </div>
+
+    <input type="submit" value="Create" />
+    <p>@(ViewBag.Message != null ? ViewBag.Message : "")</p>
+}

@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ManagerCloud.MVC.Models.Client
+<h2>Remove client</h2>
+<dl>
+    <dt>First name</dt>
+    <dd>
+        @Html.DisplayFor(model => model.FirstName)
+    </dd>
+
+    <dt>Last name</dt>
+    <dd>
+        @Html.DisplayFor(model => model.LastName)
+    </dd>
+
+</dl>
+
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Remove" />
+}

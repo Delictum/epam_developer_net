@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<ManagerCloud.MVC.Models.Sale>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h3>Sales</h3>
+    <p><a href="/Home/Buy">New purchase</a></p>
+
+    <table>
+        <tr>
+            <th>
+                <p>Client first name</p>
+            </th>
+            <th>
+                <p>Client last name</p>
+            </th>
+            <th>
+                <p>Item name</p>
+            </th>
+            <th>
+                <p>Date</p>
+            </th>
+            <th>
+                <p>Cost</p>
+            </th>
+        </tr>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td>
+
+                    <p>@sale.Client.FirstName</p>
+                </td>
+                <td>
+                    <p>@sale.Client.LastName</p>
+                </td>
+                <td>
+                    <p>@sale.Item.Name</p>
+                </td>
+                <td>
+                    <p>@sale.Date</p>
+                </td>
+                <td>
+                    <p>@sale.SaleSum</p>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+ 
+    @Html.PagedListPager(Model, page => Url.Action("Index",  new { page }))
+</div>

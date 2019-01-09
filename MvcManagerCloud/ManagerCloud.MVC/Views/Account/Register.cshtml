@@ -1,0 +1,59 @@
+﻿@model ManagerCloud.MVC.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div>
+    <h4>Register user</h4>
+    <hr />
+    @Html.ValidationSummary(false)
+
+    <div>
+        E-mail
+        <div>
+            @Html.EditorFor(model => model.Email)
+        </div>
+    </div>
+
+    <div>
+        First name
+        <div>
+            @Html.EditorFor(model => model.Client.FirstName)
+        </div>
+    </div>
+
+    <div>
+        Last name
+        <div>
+            @Html.EditorFor(model => model.Client.LastName)
+        </div>
+    </div>
+
+    <div>
+        Password
+        <div>
+            @Html.EditorFor(model => model.Password)
+        </div>
+    </div>
+
+    <div>
+        Confirm password
+        <div>
+            @Html.EditorFor(model => model.PasswordConfirm)
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <input type="submit" value="To register" />
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ManagerCloud.MVC.Models.Client
+
+<h2>Client № @Model.Id</h2>
+<p>@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })</p>
+@Html.DisplayForModel()

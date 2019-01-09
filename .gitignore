@@ -346,3 +346,5 @@ ManagerCloud/ManagerCloud.BL/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.Console/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.DAL/Properties/AssemblyInfo.cs
 ManagerCloud/ManagerCloud.Core/Properties/AssemblyInfo.cs
+*.csv
+MvcManagerCloud/ManagerCloud.Service/Properties/AssemblyInfo.cs

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Редактировать книгу";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ManagerCloud.MVC.Models.Client
+<h2>Client № @Model.Id</h2>
+@using (Html.BeginForm("Edit", "Clients", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @Html.HiddenFor(client => client.Id)
+        <p>
+            @Html.LabelFor(client => client.FirstName, "First Name")
+            <br />
+            @Html.EditorFor(client => client.FirstName)
+            @Html.ValidationMessageFor(client => client.FirstName)
+        </p>
+        <p>
+            @Html.LabelFor(client => client.LastName, "Last Name")
+            <br />
+            @Html.EditorFor(client => client.LastName)
+            @Html.ValidationMessageFor(client => client.LastName)
+
+        </p>
+        <p><input type="submit" value="Submit" /></p>
+        <p>@(ViewBag.Message != null ? ViewBag.Message : "")</p>
+
+    </fieldset>
+}

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ManagerCloud.MVC.Models.Client>
+
+<div id="searchresults">
+    <h3>Find customer(s): </h3>
+    <table id="table">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th></th>
+        </tr>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(@customer.FirstName, "Details", new { id = customer.Id })
+                </td>
+                <td>
+                    @Html.ActionLink(@customer.LastName, "Details", new { id = customer.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = customer.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

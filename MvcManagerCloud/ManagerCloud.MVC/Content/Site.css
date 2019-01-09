@@ -1,0 +1,267 @@
+﻿body {
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    background-color: #f7f7fa;
+    padding-left:40px;
+}
+
+nav {
+    display: block;
+}
+
+.menu {
+    padding-left: 10px;
+}
+    .menu ul {
+        list-style: none;
+    }
+    .menu li {
+        display: inline;
+    }
+    .menu a:hover {
+        color: red;
+    }
+table {
+    vertical-align:middle;
+    text-align:left;  
+}
+.header {
+    font-weight:bold;
+}
+td {
+    padding-right:10px;
+}
+input { 
+    width: 150px; 
+
+}
+
+p, ul {
+    margin-bottom: 20px;
+    line-height: 1.6em;
+}
+
+/* HEADINGS    
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5em;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+h2 {
+    padding: 0 0 10px 0;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5, h6 {
+    font-size: 1em;
+}
+
+/* this rule styles <h2> tags that are the  
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2 {
+    margin-top: 0;
+} 
+
+a:link {
+    color: #034af3;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #505abc;
+}
+
+a:hover {
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active {
+    color: #12eb87;
+} 
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+    background-color: silver;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.page {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header {
+    position: relative;
+    color: #000;
+    padding: 0;
+}
+
+    #header h1 {
+        font-weight: bold;
+        padding: 5px 0;
+        margin: 0;
+        color: #fff;
+        border: none;
+        line-height: 2em;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+#main {
+    padding: 30px 30px 15px 30px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+#footer {
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0;
+    font-size: .9em;
+} 
+
+/* FORM LAYOUT ELEMENTS    
+----------------------------------------------------------*/ 
+ 
+fieldset  
+{ 
+    margin: 1em 0; 
+    padding: 1em; 
+    border: 1px solid #CCC; 
+} 
+ 
+fieldset p  
+{ 
+    margin: 2px 12px 10px 10px; 
+} 
+ 
+fieldset label  
+{ 
+    display: block; 
+} 
+ 
+legend  
+{ 
+    font-size: 1.1em; 
+    font-weight: 600; 
+    padding: 2px 4px 8px 4px; 
+} 
+ 
+input[type="text"]  
+{ 
+    width: 200px; 
+    border: 1px solid #CCC; 
+} 
+ 
+input[type="password"]  
+{ 
+    width: 200px; 
+    border: 1px solid #CCC; 
+} 
+ 
+/* TABLE 
+----------------------------------------------------------*/ 
+ 
+table  
+{ 
+    border: solid 1px #e8eef4; 
+    border-collapse: collapse; 
+} 
+ 
+table td  
+{ 
+    padding: 5px;    
+    border: solid 1px #e8eef4; 
+} 
+ 
+table th 
+{ 
+    padding: 6px 5px; 
+    text-align: left; 
+    background-color: #e8eef4;  
+    border: solid 1px #e8eef4;    
+} 
+ 
+/* MISC   
+----------------------------------------------------------*/ 
+.clear 
+{ 
+    clear: both; 
+} 
+ 
+.error 
+{ 
+    color:Red; 
+} 
+ 
+#menucontainer 
+{ 
+    margin-top:40px; 
+} 
+ 
+#logindisplay 
+{ 
+    font-size:1.1em; 
+    display:block; 
+    text-align:right; 
+    margin:10px; 
+    color:White; 
+} 
+ 
+#logindisplay a:link 
+{ 
+    color: white; 
+    text-decoration: underline; 
+} 
+ 
+#logindisplay a:visited 
+{ 
+    color: white; 
+    text-decoration: underline; 
+} 
+ 
+#logindisplay a:hover 
+{ 
+    color: white; 
+    text-decoration: none; 
+} 

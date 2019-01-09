@@ -1,0 +1,23 @@
+﻿@using ManagerCloud.MVC.Menu
+@model IEnumerable<MenuItem>
+
+@helper BuildMenu(IEnumerable<MenuItem> data, int? parentId = null)
+{
+    var items = data.Where(d => d.ParentId == parentId).OrderBy(i => i.Order);
+    if (items.Any())
+    {
+        <ul>
+            @foreach (var item in items)
+            {
+                <li>
+                    <a href="@item.Url">@item.Header</a>
+                    @BuildMenu(data, item.Id)
+                </li>
+            }
+        </ul>
+    }
+}
+
+<div id="cssmenu">
+    @BuildMenu(Model)
+</div>
