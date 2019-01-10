@@ -2,29 +2,42 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <title>@ViewBag.Title - Manager Cloud</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZuEbvGwap57-OY7Q9mIT4prQITsXWgIk"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery-3.3.1.min.js")
     @Scripts.Render("~/scripts/jquery.validate.min.js")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
-    <style>
-        .btn a {
-            color: white;
-            text-decoration: none;
-        }
-
-        body {
-            background-color: #F1F1F1;
-        }
-    </style>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
  
     <body>
-        @Html.Action("Menu", "Home")
+        <nav class="navbar navbar-dark bg-info">
+            @Html.ActionLink("Manager cloud", "Index")
+            
+            <div>
+                @Html.ActionLink("Register", "Register", "Account")
+                @Html.ActionLink("Log in", "Login", "Account")
+
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <ul class="navbar-nav mr-auto">
+                    
+                        @Html.Action("Menu", "Home")
+                    
+                </ul>
+            </div>
+        </nav>
 
         @RenderBody()
         @RenderSection("Scripts", required: false)
@@ -35,6 +48,26 @@
             }
             else
             {
+                <div class="row"> 
+                    <div class="col-lg-4 niz">
+                        Social networks developer:
+                        <a class="link" href="https://www.instagram.com/delictum_est/"> <i class="fa fa-camera-retro fa-1x"></i></a>
+                        <a class="link" href="https://vk.com/delinquentis"> <i class="fab fa-vk fa-1x"></i></a>
+                    </div>
+        
+
+                    <div class="col-lg-4 niz2">
+                        Developer "Igor Olishkevich"
+                        <i class="fas fa-registered fa-1x"></i>
+                    </div>
+
+
+                    <div class="col-lg-4 niz3">
+                        Feedback: thedrakoneragoni@gmail.com
+                        <i class="fas fa-envelope-square"></i>
+                    </div>
+                </div>
+
                 <span>Syte Corp. 2019.</span>
             }
         </footer>
