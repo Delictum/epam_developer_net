@@ -1,0 +1,7 @@
+﻿namespace ManagerCloud.MVC.Models
+{
+    public class EditModel
+    {
+        public Client Client { get; set; }
+    }
+}

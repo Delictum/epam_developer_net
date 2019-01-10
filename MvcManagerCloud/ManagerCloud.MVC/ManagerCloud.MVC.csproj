@@ -181,7 +181,9 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\DataSource.cs" />
+    <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -282,6 +284,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Manage\" />
