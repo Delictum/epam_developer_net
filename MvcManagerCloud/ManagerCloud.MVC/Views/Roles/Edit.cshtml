@@ -1,0 +1,21 @@
+﻿@model ManagerCloud.MVC.Models.EditRoleModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit role</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, "")
+        @Html.HiddenFor(model => model.Id)
+        <p>Название:  @Html.EditorFor(model => model.Name)</p>
+        <p>Описание: @Html.EditorFor(model => model.Description)</p>
+        <p><input type="submit" value="Изменить" /></p>
+    </div>
+}

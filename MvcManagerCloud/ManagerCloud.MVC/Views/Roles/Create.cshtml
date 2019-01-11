@@ -1,0 +1,20 @@
+﻿@model ManagerCloud.MVC.Models.CreateRoleModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create role</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, "")
+        <p>Name:  @Html.EditorFor(model => model.Name)</p>
+        <p>Description: @Html.EditorFor(model => model.Description)</p>
+        <p><input type="submit" value="Добавить" /></p>
+    </div>
+}

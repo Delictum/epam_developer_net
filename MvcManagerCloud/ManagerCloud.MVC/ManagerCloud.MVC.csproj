@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Filters\ExceptionLoggerAttribute.cs" />
     <Compile Include="Filters\LocalAuthorizeAttribute.cs" />
@@ -176,12 +177,29 @@
     <Compile Include="Helpers\BlModelConversion.cs" />
     <Compile Include="Menu\MenuFactory.cs" />
     <Compile Include="Menu\MenuItem.cs" />
+    <Compile Include="Migrations\201901091359460_InitialCreate.cs" />
+    <Compile Include="Migrations\201901091359460_InitialCreate.Designer.cs">
+      <DependentUpon>201901091359460_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901102249540_DataMigration.cs" />
+    <Compile Include="Migrations\201901102249540_DataMigration.Designer.cs">
+      <DependentUpon>201901102249540_DataMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901102344598_DataMigration1.cs" />
+    <Compile Include="Migrations\201901102344598_DataMigration1.Designer.cs">
+      <DependentUpon>201901102344598_DataMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\ApplicationRoleManager.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\CreateRoleModel.cs" />
     <Compile Include="Models\DataSource.cs" />
     <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\EditRoleModel.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -287,6 +305,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Manage\" />
@@ -307,6 +328,17 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201901091359460_InitialCreate.resx">
+      <DependentUpon>201901091359460_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901102249540_DataMigration.resx">
+      <DependentUpon>201901102249540_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901102344598_DataMigration1.resx">
+      <DependentUpon>201901102344598_DataMigration1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

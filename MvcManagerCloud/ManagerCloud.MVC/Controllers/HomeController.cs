@@ -29,7 +29,7 @@ namespace ManagerCloud.MVC.Controllers
             return PartialView(menuItems);
         }
 
-        [LocalAuthorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [UserAuthentication]
         [HttpGet]
         public ActionResult Buy()
