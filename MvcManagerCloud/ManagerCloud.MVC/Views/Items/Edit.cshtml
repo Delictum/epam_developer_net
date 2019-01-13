@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Edit item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ManagerCloud.MVC.Models.Entities.Item
+
+<h2>Item № @Model.Id</h2>
+@using (Html.BeginForm("Edit", "Items", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @Html.HiddenFor(client => client.Id)
+
+        @Html.LabelFor(client => client.Name, "Name")
+        @Html.EditorFor(client => client.Name)
+        @Html.ValidationMessageFor(client => client.Name)
+
+        <p><input type="submit" value="Submit"/></p>
+        <p>@(ViewBag.Message != null ? ViewBag.Message : "")</p>
+
+    </fieldset>
+}

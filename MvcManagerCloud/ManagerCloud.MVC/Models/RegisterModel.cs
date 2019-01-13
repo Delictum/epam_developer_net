@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ManagerCloud.MVC.Models.Entities;
 
 namespace ManagerCloud.MVC.Models
 {

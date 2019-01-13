@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using ManagerCloud.MVC.Models.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ManagerCloud.MVC.Models
 {

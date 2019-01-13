@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ManagerCloud.MVC.Models;
+using ManagerCloud.MVC.Models.Entities;
 using ManagerCloud.MVC.ViewModels;
 using System.Web.Mvc;
 using ManagerCloud.MVC.Filters;
@@ -46,6 +46,14 @@ namespace ManagerCloud.MVC.Controllers
                 Items = new SelectList(listItems, "Name", "Name")
             };
             return View(salesView);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var sale = Helpers.BlModelConversion.GetListSales().FirstOrDefault(s => s.Id == id);
+            if (sale != null)
+                return PartialView(sale);
+            return HttpNotFound();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ManagerCloud.MVC.Models;
+using ManagerCloud.MVC.Models.Entities;
 
 namespace ManagerCloud.MVC.ViewModels
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using ManagerCloud.MVC.Models;
+using ManagerCloud.MVC.Models.Entities;
 
 namespace ManagerCloud.MVC.ViewModels
 {

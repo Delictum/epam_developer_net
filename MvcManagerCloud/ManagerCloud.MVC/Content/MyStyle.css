@@ -1,25 +1,22 @@
 body{
-background-color:#f2f2f2;
-font-family:"lato";
-font-weight: 300;
-font-size: 16px;
-color: #555;
--webkit-font-smoothing: antialiased;
--webkit-overflow-scrolling: touch;
-margin-top: 70px;
+    background-color:#f2f2f2;
+    font-family:"lato";
+    font-weight: 300;
+    font-size: 16px;
+    color: #555;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
 }
 
 p{
     line-height: 20px;
     margin-bottom: 15px;
-    color: #f2f2f2; 
+    color: #000000; 
 }
 
 .navbar{
     font-weight: 800;
     font-size: 14px;
-    padding-top: 15px;
-    padding-bottom: 15px;
     }
     
     .navbar{
@@ -56,7 +53,5 @@ td {
     color: #669;
     border-top: 1px solid #e8edff;
     padding: 10px 125px;
-    width: 100%;
-    max-width: 100%;
 }
       

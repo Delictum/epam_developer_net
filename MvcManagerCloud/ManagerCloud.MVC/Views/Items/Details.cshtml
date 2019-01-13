@@ -1,0 +1,18 @@
+﻿@model ManagerCloud.MVC.Models.Entities.Item
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Item</h4>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>Name:</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+        </dl>
+    </div>
+</div>

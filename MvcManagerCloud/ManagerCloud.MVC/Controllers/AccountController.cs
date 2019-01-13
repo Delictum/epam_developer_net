@@ -10,7 +10,8 @@ namespace ManagerCloud.MVC.Controllers
 {
     public class AccountController : Controller
     {
-        private ApplicationUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        private ApplicationUserManager UserManager => 
+            HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         public ActionResult Register()
         {
@@ -18,6 +19,7 @@ namespace ManagerCloud.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (!ModelState.IsValid)
@@ -70,6 +72,7 @@ namespace ManagerCloud.MVC.Controllers
                     {
                         IsPersistent = true
                     }, claim);
+
                     if (string.IsNullOrEmpty(returnUrl))
                         return RedirectToAction("Index", "Home");
                     return Redirect(returnUrl);
@@ -119,7 +122,7 @@ namespace ManagerCloud.MVC.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            EditModel model = new EditModel { Client = user.Client };
+            var model = new EditModel { Client = user.Client };
             return View(model);
         }
 

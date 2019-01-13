@@ -1,4 +1,5 @@
 ﻿using ManagerCloud.Core.Helpers;
+using ManagerCloud.EF;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,8 +10,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ManagerCloud.BL.Models;
-using ManagerCloud.EF;
 
 namespace ManagerCloud.BL
 {
@@ -278,10 +277,64 @@ namespace ManagerCloud.BL
         public void RemoveClient(int clientId)
         {
             var unitOfWork = new UnitOfWork(_dbContext, _lockers);
-            Expression<Func<Models.Client, bool>> clientSearchCriteria = x =>
+            Expression<Func<Models.Item, bool>> clientSearchCriteria = x =>
                 x.Id == clientId;
 
-            unitOfWork.TryRemove(clientSearchCriteria, unitOfWork.ClientRepository);
+            unitOfWork.TryRemove(clientSearchCriteria, unitOfWork.ItemRepository);
+        }
+
+        public Tuple<int, string> GetItem(int id)
+        {
+            var unitOfWork = new UnitOfWork(_dbContext, _lockers);
+            Expression<Func<Models.Item, bool>> itemSearchCriteria = x =>
+                x.Id == id;
+
+            var item = unitOfWork.GetEntity(itemSearchCriteria, unitOfWork.ItemRepository);
+
+            if (item == null)
+                return null;
+
+            var items = new Tuple<int, string>(
+                item.Id,
+                item.Name
+            );
+
+            return items;
+        }
+
+        public void AddItem(string itemName)
+        {
+            var unitOfWork = new UnitOfWork(_dbContext, _lockers);
+            Expression<Func<Models.Item, bool>> itemSearchCriteria = x =>
+                x.Name == itemName;
+
+            unitOfWork.TryAddItem(new Models.Item
+                {
+                    Name = itemName
+            },
+                itemSearchCriteria
+            );
+        }
+
+        public void UpdateItem(Tuple<int, string> itemTuple)
+        {
+            var unitOfWork = new UnitOfWork(_dbContext, _lockers);
+
+            unitOfWork.TryUpdateItem(new Models.Item
+                {
+                    Id = itemTuple.Item1,
+                    Name = itemTuple.Item2,
+                }
+            );
+        }
+
+        public void RemoveItem(int itemId)
+        {
+            var unitOfWork = new UnitOfWork(_dbContext, _lockers);
+            Expression<Func<Models.Item, bool>> itemSearchCriteria = x =>
+                x.Id == itemId;
+
+            unitOfWork.TryRemove(itemSearchCriteria, unitOfWork.ItemRepository);
         }
 
         ~Unity()

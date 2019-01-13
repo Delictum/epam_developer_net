@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.Core", "Manage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.MVC", "ManagerCloud.MVC\ManagerCloud.MVC.csproj", "{ACCEC536-B077-42A1-8F39-F445EC583FA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerCloud.Tests", "ManagerCloud.Tests\ManagerCloud.Tests.csproj", "{AA0DDC99-C6A9-4C15-9E4A-403FE7B86C9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{ACCEC536-B077-42A1-8F39-F445EC583FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCEC536-B077-42A1-8F39-F445EC583FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACCEC536-B077-42A1-8F39-F445EC583FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0DDC99-C6A9-4C15-9E4A-403FE7B86C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0DDC99-C6A9-4C15-9E4A-403FE7B86C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0DDC99-C6A9-4C15-9E4A-403FE7B86C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0DDC99-C6A9-4C15-9E4A-403FE7B86C9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

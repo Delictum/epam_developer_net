@@ -13,7 +13,7 @@ namespace ManagerCloud.MVC.Filters
 
             using (var sw = File.AppendText(path))
             {
-                sw.WriteLine(string.Join(";", filterContext.Exception.Message, filterContext.Exception.StackTrace,
+                sw.WriteLine(string.Join(";", "***\n", filterContext.Exception.Message, filterContext.Exception.StackTrace,
                     filterContext.RouteData.Values["controller"].ToString(),
                     filterContext.RouteData.Values["action"].ToString(), DateTime.Now));
             }

@@ -1,4 +1,6 @@
-﻿namespace ManagerCloud.MVC.Models
+﻿using ManagerCloud.MVC.Models.Entities;
+
+namespace ManagerCloud.MVC.Models
 {
     public class EditModel
     {

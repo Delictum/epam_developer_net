@@ -1,6 +1,6 @@
 ﻿using ManagerCloud.BL;
 using ManagerCloud.MVC.Menu;
-using ManagerCloud.MVC.Models;
+using ManagerCloud.MVC.Models.Entities;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace ManagerCloud.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private const int PageSize = 5;
+        private const int PageSize = 10;
         private readonly Unity _unity = new Unity();
 
         public ActionResult Index(int? page)
@@ -29,7 +29,6 @@ namespace ManagerCloud.MVC.Controllers
             return PartialView(menuItems);
         }
 
-        [Authorize(Roles = "admin")]
         [UserAuthentication]
         [HttpGet]
         public ActionResult Buy()
@@ -50,34 +49,33 @@ namespace ManagerCloud.MVC.Controllers
             return View();
         }
 
-        [LocalAuthorize(Roles = "admin")]
         [UserAuthentication]
         [HttpPost]
         public ActionResult Buy(Client client, Sale sale, Item item)
         {
-            var listEntityItems = _unity.GetAllItems();
-            var items = new List<string>();
-            var itemsId = new List<int>();
-
-            foreach (var listItem in listEntityItems)
+            if (ModelState.IsValid)
             {
-                items.Add(listItem.Item2);
-                itemsId.Add(listItem.Item1);
-            }
+                var listEntityItems = _unity.GetAllItems();
+                var items = new List<string>();
+                var itemsId = new List<int>();
 
-            ViewBag.Items = items;
-            ViewBag.ItemsId = itemsId;
+                foreach (var listItem in listEntityItems)
+                {
+                    items.Add(listItem.Item2);
+                    itemsId.Add(listItem.Item1);
+                }
 
-            if (client.LastName.Length < 0.01 || client.LastName.Length > 999999.99)
-            {
-                ModelState.AddModelError("SaleSum", "Incorrect cost value");
-                ViewBag.Message = "Failed";
+                ViewBag.Items = items;
+                ViewBag.ItemsId = itemsId;
+
+
+                _unity.AddSale(new Tuple<int, string, DateTime, double>(260, item.Name, DateTime.Now, sale.SaleSum));
+                ViewBag.Message = "Successful";
+
                 return View();
             }
 
-            _unity.AddSale(new Tuple<int, string, DateTime, double>(260, item.Name, DateTime.Now, sale.SaleSum));
-            ViewBag.Message = "Successful";
-
+            ViewBag.Message = "Failed";
             return View();
         }
 

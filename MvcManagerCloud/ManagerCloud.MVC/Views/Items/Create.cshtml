@@ -1,0 +1,21 @@
+﻿@model ManagerCloud.MVC.Models.Entities.Item
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New item</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(model => model.Name, "Name")
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+
+    <input type="submit" value="Create" />
+    <p>@(ViewBag.Message != null ? ViewBag.Message : "")</p>
+}

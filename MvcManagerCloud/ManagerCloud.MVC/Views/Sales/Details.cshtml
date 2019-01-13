@@ -1,0 +1,35 @@
+﻿@model ManagerCloud.MVC.Models.Entities.Sale
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Sale</h4>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>Client last name:</dt>
+            <dd>@Html.DisplayFor(model => model.Client.LastName)</dd>
+
+            <dt>Client first name:</dt>
+            <dd>@Html.DisplayFor(model => model.Client.FirstName)</dd>
+
+            <dt>Date:</dt>
+            <dd>@Html.DisplayFor(model => model.Date)</dd>
+
+            <dt>File name (data source):</dt>
+            <dd>@Html.DisplayFor(model => model.DataSource.FileName)</dd>
+
+            <dt>Item name:</dt>
+            <dd>@Html.DisplayFor(model => model.Item.Name)</dd>
+
+            <dt>Cost:</dt>
+            <dd>@Html.DisplayFor(model => model.SaleSum)</dd>
+        </dl>
+    </div>
+</div>

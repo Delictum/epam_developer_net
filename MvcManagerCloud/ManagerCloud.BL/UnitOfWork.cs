@@ -245,6 +245,26 @@ namespace ManagerCloud.BL
             }
         }
 
+        public void TryUpdateItem(Item element)
+        {
+            ResolveLocker(typeof(Item)).EnterWriteLock();
+            try
+            {
+                var entityElement = new EF.Item
+                {
+                    Id = element.Id,
+                    Name = element.Name
+                };
+
+                ItemRepository.Update(entityElement);
+                ItemRepository.Save();
+            }
+            finally
+            {
+                ResolveLocker(typeof(Client)).ExitWriteLock();
+            }
+        }
+
         //Not used
         public void VerifyInContext<TEntity>(List<TEntity> entities) where TEntity : class
         {

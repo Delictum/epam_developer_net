@@ -1,5 +1,5 @@
 ﻿using ManagerCloud.BL;
-using ManagerCloud.MVC.Models;
+using ManagerCloud.MVC.Models.Entities;
 using ManagerCloud.MVC.ViewModels;
 using System;
 using System.ComponentModel;
@@ -28,8 +28,6 @@ namespace ManagerCloud.MVC.Controllers
 
         // GET: Clients
         [UserAuthentication]
-        [LocalAuthorize(Roles = "admin")]
-        [HandleError]
         [OutputCache(Duration = 300)]
         public ActionResult Details([DefaultValue(MyFirstClientId)] int id)
         {
@@ -50,7 +48,6 @@ namespace ManagerCloud.MVC.Controllers
         }
 
         [LocalAuthorize(Roles = "admin")]
-        [HandleError]
         [HttpGet]
         [OutputCache(Duration = 300)]
         public ActionResult Edit(int? id)
@@ -76,20 +73,11 @@ namespace ManagerCloud.MVC.Controllers
         }
 
         [LocalAuthorize(Roles = "admin")]
-        [HandleError]
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName")] Client client)
+        public ActionResult Edit(Client client)
         {
             if (ModelState.IsValid)
             {
-                if (client.FirstName.Length > 30)
-                {
-                    ModelState.AddModelError("FirstName", "Too many chars");
-                }
-                else if (client.LastName.Length < 2 || client.LastName.Length > 40)
-                {
-                    ModelState.AddModelError("LastName", "Incorrect string length");
-                }
                 _unity.UpdateClient(new Tuple<int, string, string>(client.Id, client.FirstName, client.LastName));
             }
             else
@@ -115,14 +103,6 @@ namespace ManagerCloud.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (client.FirstName.Length > 30)
-                {
-                    ModelState.AddModelError("FirstName", "Too many chars");
-                }
-                else if (client.LastName.Length < 2 || client.LastName.Length > 40)
-                {
-                    ModelState.AddModelError("LastName", "Incorrect string length");
-                }
                 _unity.AddClient(new Tuple<string, string>(client.FirstName, client.LastName));
             }
             else
@@ -136,7 +116,6 @@ namespace ManagerCloud.MVC.Controllers
         }
 
         [LocalAuthorize(Roles = "admin")]
-        [HandleError]
         [OutputCache(Duration = 300)]
         [HttpGet]
         public ActionResult Delete(int? id)
@@ -163,7 +142,6 @@ namespace ManagerCloud.MVC.Controllers
         }
 
         [LocalAuthorize(Roles = "admin")]
-        [HandleError]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -188,11 +166,6 @@ namespace ManagerCloud.MVC.Controllers
             if (!string.IsNullOrEmpty(lName))
             {
                 listClients = listClients.FindAll(client => client.LastName.Contains(lName));
-            }
-
-            if (listClients.Count <= 0)
-            {
-                return HttpNotFound();
             }
 
             return PartialView(listClients);

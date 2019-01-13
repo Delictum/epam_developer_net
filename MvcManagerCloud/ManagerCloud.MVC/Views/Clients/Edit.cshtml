@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Редактировать книгу";
+    ViewBag.Title = "Edit client";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model ManagerCloud.MVC.Models.Client
+@model ManagerCloud.MVC.Models.Entities.Client
 <h2>Client № @Model.Id</h2>
 @using (Html.BeginForm("Edit", "Clients", FormMethod.Post))
 {
